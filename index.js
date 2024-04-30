@@ -42,7 +42,6 @@ app.post('/api/accounts', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
-  
   app.get('/api/accounts', async (req, res) => {
     try {
       const accounts = await Account.find({});
@@ -51,6 +50,20 @@ app.post('/api/accounts', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+  app.put('/api/accounts/:id', async (req, res) => {
+    try {
+      const {id} = req.params;
+      const accounts = await Account.findByIdAndUpdate(id,req.body);
+      if (!accounts){
+        return res.status(404).json({message : "Product Not Found"})
+      }
+      const updatedAccount = await Account.findById(id);
+      res.status(200).json(updatedAccount);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
 //database connection
 mongoose.connect("mongodb+srv://figgleCanvas:VfcW0greBHWeRmBg@ecomm.xcwucfo.mongodb.net/Figgle-Api?retryWrites=true&w=majority&appName=Ecomm").then(()=>{console.log("connection success")}).catch(()=>{console.log("connection failed")});
