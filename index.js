@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./models/product.model');
 const Account = require('./models/account.model');
-const bcrypt = require('bcrypt');
 const cors = require('cors'); // Import the cors middleware
 const app = express(); 
 
@@ -51,9 +50,8 @@ app.post('/api/accounts', async (req, res) => {
             return res.status(404).json({ message: 'Account not found' });
         }
         
-        // Compare the provided password with the hashed password in the database
-        const isMatch = await bcrypt.compare(pass, account.password);
-        if (!isMatch) {
+        // Compare the provided password with the password in the database
+        if (pass !== account.password) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
         
@@ -63,6 +61,7 @@ app.post('/api/accounts', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
   app.put('/api/accounts/:id', async (req, res) => {
     try {
       const {id} = req.params;
