@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./models/product.model');
 const Account = require('./models/account.model');
+const bcrypt = require('bcrypt');
 const cors = require('cors'); // Import the cors middleware
 const app = express(); 
 
@@ -42,14 +43,26 @@ app.post('/api/accounts', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
-  app.get('/api/accounts', async (req, res) => {
+  app.get('/api/accounts/:email/:pass', async (req, res) => {
+    const { email, pass } = req.params; // Using req.params to get parameters from URL
     try {
-      const accounts = await Account.find({});
-      res.status(200).json(accounts);
+        const account = await Account.findOne({ email }); // Find account by email
+        if (!account) {
+            return res.status(404).json({ message: 'Account not found' });
+        }
+        
+        // Compare the provided password with the hashed password in the database
+        const isMatch = await bcrypt.compare(pass, account.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Incorrect password' });
+        }
+        
+        // If email and password are correct, return the account
+        res.status(200).json(account);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
-  });
+});
   app.put('/api/accounts/:id', async (req, res) => {
     try {
       const {id} = req.params;
