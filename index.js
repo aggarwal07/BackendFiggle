@@ -35,13 +35,18 @@ app.get('/api/products',async (req,res) =>{
 
 //Account API
 app.post('/api/accounts', async (req, res) => {
-    try {
-      const account = await Account.create(req.body);
-      res.status(201).json(account);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  try {
+    const existingAccount = await Account.findOne({ email: req.body.email });
+    if (!existingAccount) {
+      const newAccount = await Account.create(req.body);
+      res.status(201).json(newAccount);
+    } else {
+      res.status(400).json({ message: 'Account already exists' });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
   app.get('/api/accounts/:email/:pass', async (req, res) => {
     const { email, pass } = req.params; // Using req.params to get parameters from URL
     try {
