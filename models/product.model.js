@@ -9,6 +9,11 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    maxPrice: {
+        type: String,
+        required: true,
+    },
+    
     description: {
         type: [String], // Assuming description is an array of strings
         required: true,
