@@ -32,6 +32,15 @@ app.get('/api/products',async (req,res) =>{
         res.status(500).json({message : error.message});
     }
 })
+app.get('/api/products/:productType', async (req, res) => {
+  const productType = req.params.productType;
+  try {
+      const products = await Product.find({ productType: productType });
+      res.status(200).json(products);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
 
 //Account API
 app.post('/api/accounts', async (req, res) => {
