@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('./models/product.model');
 const Account = require('./models/account.model');
+const Order = require('./models/order.model');
 const cors = require('cors'); // Import the cors middleware
 const app = express(); 
 
@@ -89,7 +90,23 @@ app.post('/api/accounts', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
-  
+//orders API
+app.get('/api/orders',async (req,res) =>{
+  try {
+      const orders = await Order.find({});
+      res.status(200).json(orders);
+  } catch (error) {
+      res.status(500).json({message : error.message});
+  }
+})
+app.post('/api/orders',async (req,res) =>{
+  try {
+      const order = await Order.create(req.body);
+      res.status(200).json(order);
+  } catch (error) {
+      res.status(500).json({message : error.message});
+  }
+})
 
 //database connection
 mongoose.connect("mongodb+srv://figgleCanvas:VfcW0greBHWeRmBg@ecomm.xcwucfo.mongodb.net/Figgle-Api?retryWrites=true&w=majority&appName=Ecomm").then(()=>{console.log("connection success")}).catch(()=>{console.log("connection failed")});
