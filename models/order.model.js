@@ -30,7 +30,7 @@ const OrderSchema = mongoose.Schema({
     cart: { type: Array, default: [] },
     paymentMethod: {
         type: String,
-        required: true,
+        required: false,
         enum: ['Credit Card', 'Debit Card', 'PayPal', 'Cash on Delivery'], // example payment methods
     },
     orderDate: {
