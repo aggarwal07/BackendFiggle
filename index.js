@@ -99,6 +99,15 @@ app.get('/api/orders',async (req,res) =>{
       res.status(500).json({message : error.message});
   }
 })
+app.get('/api/orders/:orderId',async (req,res) =>{
+  try {
+    const orderId = req.params.orderId;
+      const order = await Order.find({ orderId: orderId });
+      res.status(200).json(order);
+  } catch (error) {
+      res.status(500).json({message : error.message});
+  }
+})
 app.post('/api/orders',async (req,res) =>{
   try {
       const order = await Order.create(req.body);
