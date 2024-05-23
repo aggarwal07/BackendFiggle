@@ -42,6 +42,15 @@ app.get('/api/products/:productType', async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 });
+app.get('/api/search',async (req,res) =>{
+  try {
+    const searchTerm = req.query.q;
+    const products = await Product.find({ name: new RegExp(searchTerm, 'i') }); // Case-insensitive search
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+})
 
 //Account API
 app.post('/api/accounts', async (req, res) => {
