@@ -47,7 +47,7 @@ const ProductSchema = mongoose.Schema({
     quantity:{
         type: Number,
         required: false,
-        default : 0
+        default : 1,
     }
 });
 const Product = mongoose.model("Product", ProductSchema);
