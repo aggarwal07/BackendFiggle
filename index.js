@@ -35,17 +35,26 @@ app.get('/api/products',async (req,res) =>{
 })
 app.get('/api/products/:productType', async (req, res) => {
   const productType = req.params.productType;
+  const category = req.query.category; // get the genre from query parameters
+
   try {
-      const products = await Product.find({ productType: productType });
-      res.status(200).json(products);
+    let query = { productType: productType };
+
+    if (category) {
+      query.category = category;
+    }
+
+    const products = await Product.find(query);
+    res.status(200).json(products);
   } catch (error) {
-      res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 app.get('/api/search',async (req,res) =>{
   try {
     const searchTerm = req.query.q;
-    const products = await Product.find({ name: new RegExp(searchTerm, 'i') }); // Case-insensitive search
+    // const limit = parseInt(req.query.limit, 10) || 5;
+    const products = await Product.find({ name: new RegExp(searchTerm, 'i') }).limit(limit); // Case-insensitive search
     res.status(200).json(products);
   } catch (error) {
     res.status(500).send(error.message);
