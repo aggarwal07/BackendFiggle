@@ -53,7 +53,7 @@ app.get('/api/products/:productType', async (req, res) => {
 app.get('/api/search',async (req,res) =>{
   try {
     const searchTerm = req.query.q;
-    // const limit = parseInt(req.query.limit, 10) || 5;
+    const limit = parseInt(req.query.limit, 10) || 5;
     const products = await Product.find({ name: new RegExp(searchTerm, 'i') }).limit(limit); // Case-insensitive search
     res.status(200).json(products);
   } catch (error) {
