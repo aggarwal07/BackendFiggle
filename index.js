@@ -136,7 +136,7 @@ app.post('/api/orders',async (req,res) =>{
 })
 
 //database connection
-mongoose.connect("mongodb+srv://canvifyy:w9F7vI2bvrcgsBkh@canvify.kcc83zj.mongodb.net/?retryWrites=true&w=majority&appName=Canvify").then(()=>{console.log("connection success")}).catch(()=>{console.log("connection failed")});
+mongoose.connect("mongodb+srv://canvifyy:w9F7vI2bvrcgsBkh@canvify.kcc83zj.mongodb.net/Canvify?retryWrites=true&w=majority&appName=Canvify").then(()=>{console.log("connection success")}).catch(()=>{console.log("connection failed")});
 
 //server
 app.listen(3000,()=>{
