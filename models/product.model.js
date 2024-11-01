@@ -5,37 +5,38 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    price: {
-        type: String,
-        required: true,
-    },
-    maxPrice: {
-        type: String,
-        required: true,
-    },
-    
     description: {
-        type: [String], // Assuming description is an array of strings
+        type: [String], // Array of strings for descriptions
         required: true,
     },
     images: {
-        type: [String], // Assuming images is an array of strings (URLs?)
+        type: [String], // Array of image URLs
         required: true,
     },
-    type: [{
-        size: {
-            type: String,
-            required: true,
-        },
-        material: {
-            type: String,
-            required: true,
-        },
-        price: {
-            type: String,
-            required: true,
-        },
-    }],
+    variants: [
+        {
+            material: {
+                type: String,
+                required: true,
+            },
+            options: [
+                {
+                    size: {
+                        type: String,
+                        required: true,
+                    },
+                    price: {
+                        type: String,
+                        required: true,
+                    },
+                    discountedPrice: {
+                        type: String,
+                        required: true,
+                    },
+                }
+            ]
+        }
+    ],
     category: {
         type: String,
         required: true,
@@ -44,11 +45,12 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    quantity:{
+    quantity: {
         type: Number,
         required: false,
-        default : 1,
+        default: 1,
     }
 });
+
 const Product = mongoose.model("Product", ProductSchema);
 module.exports = Product;
