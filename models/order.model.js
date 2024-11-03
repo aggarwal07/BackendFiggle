@@ -3,13 +3,17 @@ const mongoose = require("mongoose");
 const OrderSchema = mongoose.Schema({
   orderId: {
     type: String,
-    required: false,
+    required: true,
   },
   name: {
     type: String,
     required: true,
   },
   phoneNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
@@ -34,7 +38,7 @@ const OrderSchema = mongoose.Schema({
   cart: { type: Array, default: [] },
   paymentMethod: {
     type: String,
-    required: false,
+    required: true,
     enum: ["Credit Card", "Debit Card", "PayPal", "Cash on Delivery"],
   },
   orderDate: {
