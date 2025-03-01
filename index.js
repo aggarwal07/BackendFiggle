@@ -162,13 +162,11 @@ app.post("/api/orders/payment/verify", async (req, res) => {
   sha.update(razorpay_order_id + "|" + razorpay_payment_id);
   const digest = sha.digest("hex");
   if (digest === razorpay_signature) {
-    res
-      .status(200)
-      .json({
-        message: "Payment successful",
-        orderId: razorpay_order_id, 
-        paymentId: razorpay_payment_id,
-      });
+    res.status(200).json({
+      message: "Payment successful",
+      orderId: razorpay_order_id,
+      paymentId: razorpay_payment_id,
+    });
   } else {
     res.status(400).json({ message: "Payment failed" });
   }
@@ -176,9 +174,7 @@ app.post("/api/orders/payment/verify", async (req, res) => {
 
 //database connection
 mongoose
-  .connect(
-    "mongodb+srv://canvifyy:w9F7vI2bvrcgsBkh@canvify.kcc83zj.mongodb.net/Canvify?retryWrites=true&w=majority&appName=Canvify"
-  )
+  .connect(process.env.mongooseURI)
   .then(() => {
     console.log("connection success");
   })
