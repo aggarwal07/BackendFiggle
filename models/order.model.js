@@ -50,7 +50,7 @@ const OrderSchema = mongoose.Schema({
     default: Date.now,
   },
   orderStatus: { type: String, required: false },
-  amount: { type: Number, required: true },
+  amount: { type: String, required: true },
 });
 
 const Order = mongoose.model("Order", OrderSchema);
