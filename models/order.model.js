@@ -5,6 +5,10 @@ const OrderSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  paymentId: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -36,11 +40,11 @@ const OrderSchema = mongoose.Schema({
     },
   },
   cart: { type: Array, default: [] },
-  paymentMethod: {
-    type: String,
-    required: true,
-    enum: ["Credit Card", "Debit Card", "PayPal", "Cash on Delivery"],
-  },
+  // paymentMethod: {
+  //   type: String,
+  //   required: true,
+  //   enum: ["Credit Card", "Debit Card", "PayPal", "Cash on Delivery"],
+  // },
   orderDate: {
     type: Date,
     default: Date.now,
